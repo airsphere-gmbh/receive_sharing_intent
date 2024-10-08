@@ -235,6 +235,7 @@ public enum SharedMediaType: String, Codable, CaseIterable {
 //     case audio
     case file
     case url
+    case pkpass
 
     public var toUTTypeIdentifier: String {
         if #available(iOS 14.0, *) {
@@ -251,6 +252,8 @@ public enum SharedMediaType: String, Codable, CaseIterable {
                 return UTType.fileURL.identifier
             case .url:
                 return UTType.url.identifier
+            case .pkpass:
+                return "com.apple.pkpass"
             }
         }
         switch self {
@@ -266,6 +269,8 @@ public enum SharedMediaType: String, Codable, CaseIterable {
             return "public.file-url"
         case .url:
             return "public.url"
+        case .pkpass:
+            return "com.apple.pkpass"
         }
     }
 }
