@@ -118,7 +118,7 @@ public class SwiftReceiveSharingIntentPlugin: NSObject, FlutterPlugin, FlutterSt
         if let json = userDefaults?.object(forKey: kUserDefaultsKey) as? Data {
             let sharedArray = decode(data: json)
             let sharedMediaFiles: [SharedMediaFile] = sharedArray.compactMap {
-                guard let path = $0.type == .text || $0.type == .url ? $0.path
+                guard let path = $0.type == .text || $0.type == .pkpass || $0.type == .url ? $0.path
                         : getAbsolutePath(for: $0.path) else {
                     return nil
                 }
