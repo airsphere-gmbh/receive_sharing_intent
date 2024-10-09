@@ -67,6 +67,15 @@ open class RSIShareViewController: SLComposeServiceViewController {
                                                          index: index,
                                                          content: content)
                                     }
+                                case .pkpass:
+                                    if (let raw = data as? NSData) {
+                                        let b64 = raw.base64EncodedString();
+                                        this.handleMedia(forLiteral: b64,
+                                                         type: type,
+                                                         index: index,
+                                                         content: content)
+
+                                    }
                                 default:
                                     if let url = data as? URL {
                                         this.handleMedia(forFile: url,
@@ -116,9 +125,16 @@ open class RSIShareViewController: SLComposeServiceViewController {
     
     
     private func handleMedia(forLiteral item: String, type: SharedMediaType, index: Int, content: NSExtensionItem) {
+        var mimeType: String? = nil;
+        if(type == .text){
+            mimeType = "text/plain";
+        }
+        else if(type == .pkpass){
+            mimeType = "text/b64";
+        }
         sharedMedia.append(SharedMediaFile(
             path: item,
-            mimeType: type == .text ? "text/plain": nil,
+            mimeType: mimeType,
             type: type
         ))
         if index == (content.attachments?.count ?? 0) - 1 {

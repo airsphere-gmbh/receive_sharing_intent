@@ -118,7 +118,7 @@ public class SwiftReceiveSharingIntentPlugin: NSObject, FlutterPlugin, FlutterSt
         if let json = userDefaults?.object(forKey: kUserDefaultsKey) as? Data {
             let sharedArray = decode(data: json)
             let sharedMediaFiles: [SharedMediaFile] = sharedArray.compactMap {
-                guard let path = $0.type == .text || $0.type == .url ? $0.path
+                guard let path = $0.type == .text || $0.type == .pkpass || $0.type == .url ? $0.path
                         : getAbsolutePath(for: $0.path) else {
                     return nil
                 }
@@ -235,6 +235,7 @@ public enum SharedMediaType: String, Codable, CaseIterable {
 //     case audio
     case file
     case url
+    case pkpass
 
     public var toUTTypeIdentifier: String {
         if #available(iOS 14.0, *) {
@@ -251,6 +252,8 @@ public enum SharedMediaType: String, Codable, CaseIterable {
                 return UTType.fileURL.identifier
             case .url:
                 return UTType.url.identifier
+            case .pkpass:
+                return "com.apple.pkpass"
             }
         }
         switch self {
@@ -266,6 +269,8 @@ public enum SharedMediaType: String, Codable, CaseIterable {
             return "public.file-url"
         case .url:
             return "public.url"
+        case .pkpass:
+            return "com.apple.pkpass"
         }
     }
 }
