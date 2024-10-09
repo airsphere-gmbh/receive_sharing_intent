@@ -68,7 +68,7 @@ open class RSIShareViewController: SLComposeServiceViewController {
                                                          content: content)
                                     }
                                 case .pkpass:
-                                    if let raw = data as? NSData{
+                                    if (let raw = data as? NSData) {
                                         let b64 = raw.base64EncodedString();
                                         this.handleMedia(forLiteral: b64,
                                                          type: type,
